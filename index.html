@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Examples</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+	<style>
+		#box,#result{
+			width:600px;
+			margin:10px auto;
+			background-color:#4178be;
+			padding:30px;
+			color:white;
+			text-align:center;
+		}
+		#box input[type=button]{
+			margin-top: 50px;
+		}
+		#box span{
+			display:inline-block;
+			width:200px;
+			margin-top: 20px;
+		}
+		#box input{
+			border-radius:10px;
+			width:380px;
+			height:30px;
+			font-size:20px;
+		}
+			
+		#result {
+			font-size:20px;
+		}
+		#result b{
+			float: left;
+		}
+	</style>
+	<script type="text/javascript" src="jquery-1.11.0.js"></script>
+</head>
+<body>
+    <div id="box">
+    	<span>AppID(应用ID):</span><input id="appid"/><br/>
+    	<span>AppSecret(应用密钥):</span><input id="appsecret"/><br/>
+    	<span>URL:</span><input id="url"/><br/>
+    	<input type="button" value="OK" id="calButton">
+    </div>
+	
+	<div id="result">
+		
+	</div>
+
+	<script>
+		$("#calButton").click(function(){
+			$.ajax({
+				url:"http://localhost:8899/",
+				data:"appid="+$("#appid").val()+"&appsecret="+$("#appsecret").val()+"&url="+$("#url").val(),
+				success:function(data){
+					$("#result").html(data);
+				}
+			})
+		})
+
+	</script>
+</body>
+</html>
