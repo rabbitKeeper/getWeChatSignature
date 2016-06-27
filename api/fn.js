@@ -1,5 +1,4 @@
 var crypto = require('crypto');
-var sha1 = crypto.createHash('sha1');
 module.exports = {
     _getRandomStr:function(){
         //返回16位随机字符
@@ -40,6 +39,7 @@ module.exports = {
         return options;
     },
     _getSignature : function(jsapiTicket,url,appid){
+        var sha1 = crypto.createHash('sha1');
         var _timeStamp = this._getTimeStamp();
         var _randomStr = this._getRandomStr();
         var _str = 'jsapi_ticket='+jsapiTicket+'&noncestr='+this._getRandomStr()+'&timestamp='+_timeStamp+'&url='+url;

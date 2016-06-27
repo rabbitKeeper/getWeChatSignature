@@ -12,7 +12,6 @@ function start() {
 
         if (args.appid && args.appsecret && args.url) {
             //            当请求数据中包含appid的时候才执行获取网页数据
-            var _url = 'http://' + args.url;
             https.get(fn._getTokenOptions(args.appid, args.appsecret), function (res) {
                 var _tokenStr = "";
                 res.on('data', function (chunk) {
@@ -33,7 +32,7 @@ function start() {
                     })
                     res.on("end", function () {
                         _tickets = JSON.parse(_ticketStr).ticket;
-                        var _signPackage = fn._getSignature(_tickets, _url, args.appid);
+                        var _signPackage = fn._getSignature(_tickets, args.url, args.appid);
 
                         //使用兼容模式输出
 //                        var _resStr = '<b>appId:</b>' + _signPackage.appid + '<br><b>timestamp:</b>' +_signPackage.timestamp + '<br><b>nonceStr:</b>' + _signPackage.nonceStr + '<br><b>signature:</b>' + _signPackage.signature;
@@ -51,7 +50,7 @@ function start() {
         });
     }
 
-    http.createServer(onRequest).listen(8899);
+    http.createServer(onRequest).listen(8889);
     console.log('服务启动成功！');
 }
 exports.start = start;
