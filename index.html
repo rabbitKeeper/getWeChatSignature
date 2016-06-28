@@ -55,10 +55,19 @@
 	<script>
 		$("#calButton").click(function(){
 			$.ajax({
-				url:"http://localhost:8899/",
-				data:"appid="+$("#appid").val()+"&appsecret="+$("#appsecret").val()+"&url="+$("#url").val(),
+				url:"http://localhost:8889/",
+                type : "GET",
+                async: true,
+				data:{
+                    appid : $("#appid").val().trim(),
+                    appsecret : $('#appsecret').val().trim(),
+                    url : $('#url').val().trim()
+                },
+                dataType: "jsonp",
+                jsonp : "callback",
 				success:function(data){
-					$("#result").html(data);
+					var _printStr = '<b>appId:</b>'+data["appid"]+'<br><b>timestamp:</b>'+data["timestamp"]+'<br><b>nonceStr:</b>'+data["nonceStr"]+'<br><b>signature:</b>'+data["signature"];
+                    $("#result").html(_printStr);
 				}
 			})
 		})

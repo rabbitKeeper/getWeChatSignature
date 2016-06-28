@@ -9,7 +9,7 @@ function start() {
         var _tickets = "";
         //获取请求参数,在parse中加入true可以让请求参数变为object对象类型
         var args = url.parse(request.url, true).query;
-
+        var _callback = args.callback?args.callback:'callback';
         if (args.appid && args.appsecret && args.url) {
             //            当请求数据中包含appid的时候才执行获取网页数据
             https.get(fn._getTokenOptions(args.appid, args.appsecret), function (res) {
@@ -32,12 +32,9 @@ function start() {
                     })
                     res.on("end", function () {
                         _tickets = JSON.parse(_ticketStr).ticket;
-                        var _signPackage = fn._getSignature(_tickets, args.url, args.appid);
+                        var _signPackage = fn._getSignature(_accessToken,_tickets, args.url, args.appid);
 
-                        //使用兼容模式输出
-//                        var _resStr = '<b>appId:</b>' + _signPackage.appid + '<br><b>timestamp:</b>' +_signPackage.timestamp + '<br><b>nonceStr:</b>' + _signPackage.nonceStr + '<br><b>signature:</b>' + _signPackage.signature;
-
-                        response.end(JSON.stringify(_signPackage));
+                        response.end(_callback + '(' + JSON.stringify(_signPackage) + ')');
                     })
                 });
             }

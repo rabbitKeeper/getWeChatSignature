@@ -38,7 +38,7 @@ module.exports = {
         
         return options;
     },
-    _getSignature : function(jsapiTicket,url,appid){
+    _getSignature : function(_accessToken,jsapiTicket,url,appid){
         var sha1 = crypto.createHash('sha1');
         var _timeStamp = this._getTimeStamp();
         var _randomStr = this._getRandomStr();
@@ -47,9 +47,11 @@ module.exports = {
         var _signature = sha1.digest('hex');
         var _signPackage = {
             "appid" : appid,
+            "accessToken" : _accessToken,
             "timestamp" : _timeStamp,
             "nonceStr" : _randomStr,
-            "signature" : _signature
+            "signature" : _signature,
+            "orientStr" : _str
         }
         
         return _signPackage;
