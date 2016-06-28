@@ -33,7 +33,8 @@ function start() {
                     res.on("end", function () {
                         _tickets = JSON.parse(_ticketStr).ticket;
                         var _signPackage = fn._getSignature(_accessToken,_tickets, args.url, args.appid);
-
+                        
+                        //如果需要使用json的方法获取数据，去掉callback即可
                         response.end(_callback + '(' + JSON.stringify(_signPackage) + ')');
                     })
                 });
@@ -43,7 +44,11 @@ function start() {
 
         //响应内容
         response.writeHead(200, {
-            "Content-Type": "application/json;charset=UTF-8; "
+            "Content-Type": "application/json;charset=UTF-8;",
+            //解决跨域问题的代码，临时用不到，但是如果需要返回json数据的话会用到
+//            "Access-Control-Allow-Origin" : "*",
+//            "Access-Control-Allow-Headers" : "X-Requested-With",
+//            "Access-Control-Allow-Methods" : "PUT,POST,GET,DELETE,OPTIONS"
         });
     }
 
