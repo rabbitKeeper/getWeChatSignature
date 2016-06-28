@@ -7,10 +7,12 @@ function start() {
     function onRequest(request, response) {
         var _accessToken = "";
         var _tickets = "";
+        
         //获取请求参数,在parse中加入true可以让请求参数变为object对象类型
         var args = url.parse(request.url, true).query;
         var _callback = args.callback?args.callback:'callback';
         if (args.appid && args.appsecret && args.url) {
+            
             //            当请求数据中包含appid的时候才执行获取网页数据
             https.get(fn._getTokenOptions(args.appid, args.appsecret), function (res) {
                 var _tokenStr = "";
@@ -45,7 +47,7 @@ function start() {
         //响应内容
         response.writeHead(200, {
             "Content-Type": "application/json;charset=UTF-8;",
-            //解决跨域问题的代码，临时用不到，但是如果需要返回json数据的话会用到
+            //解决跨域问题的代码，如果需要返回json数据时会用到
 //            "Access-Control-Allow-Origin" : "*",
 //            "Access-Control-Allow-Headers" : "X-Requested-With",
 //            "Access-Control-Allow-Methods" : "PUT,POST,GET,DELETE,OPTIONS"

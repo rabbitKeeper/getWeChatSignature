@@ -14,7 +14,7 @@ module.exports = {
         return Math.round(new Date().getTime()/1000);
     },
     _getTokenOptions : function(_appid,_secret){
-        //获取连接option
+        //获取Token的连接option
         var path = '/cgi-bin/token?grant_type=client_credential&appid='+_appid+'&secret='+_secret;
         var  options = { 
             hostname:  "api.weixin.qq.com", 
@@ -27,6 +27,7 @@ module.exports = {
         return options;
     },
     _getTicketOptions : function(token){
+        //获取ticket的连接option
         var path = '/cgi-bin/ticket/getticket?type=jsapi&access_token='+token;
         var  options = { 
             hostname:  "api.weixin.qq.com", 
@@ -38,7 +39,9 @@ module.exports = {
         
         return options;
     },
-    _getSignature : function(_accessToken,jsapiTicket,url,appid){
+    _getSignature : function(_accessToken,jsapiTicket,url,_appid){
+        //生成signature，并且返回数据对象
+        
         var sha1 = crypto.createHash('sha1');
         var _timeStamp = this._getTimeStamp();
         var _randomStr = this._getRandomStr();
@@ -46,7 +49,7 @@ module.exports = {
         sha1.update(_str);
         var _signature = sha1.digest('hex');
         var _signPackage = {
-            "appid" : appid,
+            "appid" : _appid,
             "accessToken" : _accessToken,
             "timestamp" : _timeStamp,
             "nonceStr" : _randomStr,
